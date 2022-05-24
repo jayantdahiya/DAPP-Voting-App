@@ -1,0 +1,47 @@
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 50px;
+}
+
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+}
+
+.header {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.bio {
+  text-align: center;
+  color: gray;
+  margin-top: 14px;
+}
+
+.Button {
+  cursor: pointer;
+  background: black;
+  color: white;
+  margin-top: 16px;
+  padding: 8px;
+  border: 2.5;
+  border-radius: 13px;
+  
+}
+
+.connectButton {
+  cursor: pointer;
+  background: green;
+  color: white;
+  margin-top: 16px;
+  padding: 8px;
+  border: 2.5;
+  border-radius: 13px;
+  
+}
