@@ -8,9 +8,14 @@ import abi from "./utils/WavePortal.json";
 
 const App = () => {
     const [currentAccount, setCurrentAccount] = useState("");
-    const contractAddress = "0xf854D3bB4b02437FE0F1c670Ee2b8be37a9dd4fe";
+    const contractAddress = "0x7254fD190bc6840B0B5e3e0E2ef2931681B32E01";
     const contractABI = abi.abi;
     const [allVotes, setAllVotes] = useState([]);
+    const [candidate1Total, setCandidate1Total] = useState("");
+    const [candidate2Total, setCandidate2Total] = useState("");
+    const [candidate3Total, setCandidate3Total] = useState("");
+    const [noVoteTotal, setNoVoteTotal] = useState("");
+    
 
     const [selectedVote, setVote] = useState("");
     const [message, setMessage] = useState("***this is the default message***");
@@ -36,6 +41,18 @@ const App = () => {
         });
 
         setAllVotes(votesCleaned);
+
+        const votes1 = await wavePortalContract.getCandidate1Votes();
+        setCandidate1Total(votes1.toNumber());
+        // console.log("Votes of Candidate 1:", votes1.toNumber());
+        const votes2 = await wavePortalContract.getCandidate2Votes();
+        setCandidate2Total(votes2.toNumber());
+        const votes3 = await wavePortalContract.getCandidate3Votes();
+        setCandidate3Total(votes3.toNumber());
+        const noVotes = await wavePortalContract.getNoneVotes();
+        setNoVoteTotal(noVotes.toNumber());
+
+        
       } else {
         console.log("Ethereum object doesn't exist!")
       }
@@ -73,7 +90,7 @@ const App = () => {
   }
 
   /**
-  * Implement your connectWallet method here
+  * connectWallet method 
   */
   const connectWallet = async () => {
     try {
@@ -100,107 +117,6 @@ const App = () => {
   }, [])
 
  
-  // const vote1 = async() => {
-  //   try {
-  //     const { ethereum } = window;
-
-  //     if (ethereum) {
-  //       const provider = new ethers.providers.Web3Provider(ethereum);
-  //       const signer = provider.getSigner();
-  //       const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-  //       const voteFor1 = await wavePortalContract.voteCandidate1("This is a test message!");
-  //       console.log("Mining...", voteFor1.hash);
-
-  //       await voteFor1.wait();
-  //       console.log("Mined -- ", voteFor1.hash);
-
-  //       const count = await wavePortalContract.getTotalVotes();
-  //       console.log("Total Votes: ", count.toNumber());
-  //     } else {
-  //       console.log("Ethereum object doesn't exist!");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // const vote2 = async() => {
-  //   try {
-  //     const { ethereum } = window;
-
-  //     if (ethereum) {
-  //       const provider = new ethers.providers.Web3Provider(ethereum);
-  //       const signer = provider.getSigner();
-  //       const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-  //       const voteFor2 = await wavePortalContract.voteCandidate2("This is a test message!");
-  //       console.log("Mining...", voteFor2.hash);
-
-  //       await voteFor2.wait();
-  //       console.log("Mined -- ", voteFor2.hash);
-
-  //       const count = await wavePortalContract.getTotalVotes();
-  //       console.log("Total Votes: ", count.toNumber());
-  //     } else {
-  //       console.log("Ethereum object doesn't exist!");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // const vote3 = async() => {
-  //   try {
-  //     const { ethereum } = window;
-
-  //     if (ethereum) {
-  //       const provider = new ethers.providers.Web3Provider(ethereum);
-  //       const signer = provider.getSigner();
-  //       const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-  //       const voteFor3 = await wavePortalContract.voteCandidate3("This is a test message!");
-  //       console.log("Mining...", voteFor3.hash);
-
-  //       await voteFor3.wait();
-  //       console.log("Mined -- ", voteFor3.hash);
-
-  //       const count = await wavePortalContract.getTotalVotes();
-  //       console.log("Total Votes: ", count.toNumber());
-  //     } else {
-  //       console.log("Ethereum object doesn't exist!");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // const noVote = async() => {
-  //   try {
-  //     const { ethereum } = window;
-
-  //     if (ethereum) {
-  //       const provider = new ethers.providers.Web3Provider(ethereum);
-  //       const signer = provider.getSigner();
-  //       const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-  //       const voteForNone = await wavePortalContract.voteNone("This is test message!");
-  //       console.log("Mining...", voteForNone.hash);
-
-  //       await voteForNone.wait();
-  //       console.log("Mined -- ", voteForNone.hash);
-
-  //       const count = await wavePortalContract.getTotalVotes();
-  //       console.log("Total Votes: ", count.toNumber());
-      
-  //     } else {
-  //       console.log("Ethereum object doesn't exist!");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   const castVote = async() => {
     try{
       const {ethereum} = window;
@@ -279,7 +195,7 @@ const App = () => {
              <option value="candidate1">Candidate 1</option>
              <option value="candidate2">Candidate 2</option>
              <option value="candidate3">Candidate 3</option>
-             <option selected value="noVote">Vote for None</option>
+             <option defaultValue="noVote">Vote for None</option>
             </select>
           </label>
           <br />
@@ -291,6 +207,16 @@ const App = () => {
           <br />
         <input type="submit" value="Submit"></input>
         </form>
+        </div>
+
+        <br />
+
+        <div>
+          <li>Total votes of Candidate 1 ==> {candidate1Total}</li>
+          <li>Total votes of Candidate 2 ==> {candidate2Total}</li>
+          <li>Total votes of Candidate 3 ==> {candidate3Total}</li>
+          <li>Total votes for no vote ==> {noVoteTotal}</li>
+         
         </div>
 
         
