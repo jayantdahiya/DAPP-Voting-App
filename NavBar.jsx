@@ -18,7 +18,7 @@ export default function Nav() {
                     variant="h6"
                     component="div"
                     sx={{flexGrow:1}}
-                    >Voting-DAPP</Typography>
+                    >DAPP</Typography>
 
                     <Button color="inherit">
                         Connect Wallet 

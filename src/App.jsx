@@ -4,6 +4,7 @@ import './App.css';
 import abi from "./utils/WavePortal.json";
 
 import Nav from "../NavBar";
+import Msg from "./Messages";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -11,7 +12,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import Button from '@mui/material/Button';
-import { AppBar, Box, FormControl, InputLabel, NativeSelect, TextField, Toolbar, Typography } from "@mui/material";
+import {  Avatar, Card, CardContent, Divider, FormControl, Grid, InputLabel, List, ListItem, ListItemAvatar, ListItemText, NativeSelect, Paper, TextField, Typography } from "@mui/material";
 
 
 
@@ -217,8 +218,10 @@ const App = () => {
   </form>
   </div> */}
 
-  {/* Material UI Form */}
-  <div>
+  {/* Material UI */}
+  <div className="firstDiv">
+
+  <div className="selection-div">
   <FormControl fullWidth>
     <InputLabel variant="standard" htmlFor="uncontrolled-native">
       Select Your Candidate
@@ -233,6 +236,9 @@ const App = () => {
       <option value={0}>Vote for None</option>
     </NativeSelect>
   </FormControl>
+  </div>
+
+  <div className="textField-div">
 
   <FormControl fullWidth>
 
@@ -244,26 +250,58 @@ const App = () => {
   ></TextField>
   
   </FormControl>
-  <Button variant="contained" color="success">Submit</Button>
-
   </div>
- 
 
-  <br />
+  <div className="button-div">
+  <Button variant="contained" color="success">Submit</Button>
+  </div>
+  </div>
 
-  <div>
-    <li>Total votes of Candidate 1 ==> {candidate1Total}</li>
-    <li>Total votes of Candidate 2 ==> {candidate2Total}</li>
-    <li>Total votes of Candidate 3 ==> {candidate3Total}</li>
-    <li>Total votes for no vote ==> {noVoteTotal}</li>
+
+  <div className="totalVotesList">
+    <List
+    sx={{
+      width: '100%',
+      maxWidth: 360,
+      bgcolor: 'background.paper',
+    }}
+    >
+      <ListItem>
+     <ListItemAvatar>
+       <Avatar>
+       </Avatar>
+     </ListItemAvatar>
+     <ListItemText primary="Candidate 1 Votes:" secondary={candidate1Total}/>
+   </ListItem>
+   <Divider variant="inset" component="li" />
+   <ListItem>
+     <ListItemAvatar>
+       <Avatar></Avatar>
+     </ListItemAvatar>
+     <ListItemText primary="Candidate 2 Votes:" secondary={candidate2Total}/>
+   </ListItem>
+   <Divider variant="inset" component="li" />
+   <ListItem>
+     <ListItemAvatar>
+       <Avatar></Avatar>
+     </ListItemAvatar>
+     <ListItemText primary="Candidate 3 Votes:" secondary={candidate3Total}/>
+   </ListItem>
+   <Divider variant="inset" component="li"/>
+   <ListItem>
+     <ListItemAvatar>
+       <Avatar></Avatar>
+     </ListItemAvatar>
+     <ListItemText primary="Total no votes:" secondary={noVoteTotal}/>
+   </ListItem>
+    </List>
    
   </div>
 
   
 
-  {!currentAccount && (
+  {/* {!currentAccount && (
     <Button 
-    // className="connectButton" 
     variant="contained"
     color="success"
     onClick={connectWallet}>
@@ -274,11 +312,76 @@ const App = () => {
     <Button variant="contained" disabled>
       Connect Wallet
       </Button>
-  )}
+  )} */}
+
+
+  <div className="messageDiv">
+    <div className="messageDivHeading">
+    <Typography variant="h5">Messages</Typography>
+    </div>
+    {allVotes.map((vote,index) => {
+      return (
+        // <Card 
+        // key={index}
+        // className="messageCard"
+        // >
+        //   <CardContent>
+        //     <Typography sx={{fontSize: 12}} gutterBottom>
+        //       Address: {vote.address}
+        //     </Typography>
+        //     <Typography variant="subtitle1" sx={{fontSize: 12}}>
+        //       Time: {vote.timestamp.toString()}
+        //     </Typography>
+        //     <Typography>
+        //       Message: {vote.message}
+        //     </Typography>
+        //   </CardContent>
+        // </Card>
+        <Paper key={index} 
+        sx={{
+          p: 2,
+          margin: 'auto',
+          flexGrow: 1,
+          Width: '80vw',
+          backgroundColor: '#1A2027',
+          marginBottom: '10px',
+          marginTop: '20px'
+        }}
+        >
+          <Grid item xs={12} sm container>
+          <Grid item xs container direction="column" spacing={2}>
+          <Grid item xs>
+              <Typography gutterBottom variant="subtitle1" component="div" sx={{fontSize: 12, color: '#fff'}}>
+                Address: {vote.address}
+              </Typography>
+              <Typography variant="body2" color="White" sx={{fontSize: 16}}>
+                ===> {vote.message}
+              </Typography>
+            </Grid>
+          </Grid>
+          
+          <Grid item>
+            <Typography variant="subtitle1" component="div" sx={{color: '#fff', fontSize: 12}}>
+              {Intl.DateTimeFormat('en-US',{year: 'numeric', 
+                                            month: '2-digit',
+                                            day: '2-digit', 
+                                            })
+                                            .format(vote.timestamp)}
+            </Typography>
+          </Grid>
+          </Grid>
+        </Paper>
+      )
+    })}
+  </div>
 
   
 
-  {allVotes.map((vote,index) => {
+
+
+  
+
+  {/* {allVotes.map((vote,index) => {
 return (
   <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px"}}>
     <div>Address: {vote.address}</div>
@@ -286,7 +389,9 @@ return (
     <div>Message: {vote.message}</div>
   </div>
 )
-  })}
+  })} */}
+
+
 </div>
 </div>
 

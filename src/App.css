@@ -12,36 +12,57 @@
   max-width: 600px;
 }
 
-.header {
-  text-align: center;
-  font-size: 28px;
-  font-weight: 600;
+
+.firstDiv{
+  margin-top: 20px;
+  border-style: solid;
+  border-width: 3px;
+  border-left: hidden;
+  border-right: hidden;
+  border-color: darkgrey;
+  margin-bottom: 30px;
 }
 
-.bio {
-  text-align: center;
-  color: gray;
-  margin-top: 14px;
+.selection-div{
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
-.Button {
-  cursor: pointer;
-  background: black;
-  color: white;
-  margin-top: 16px;
-  padding: 8px;
-  border: 2.5;
-  border-radius: 13px;
-  
+.textField-div{
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
-.connectButton {
-  cursor: pointer;
-  background: green;
-  color: white;
-  margin-top: 16px;
-  padding: 8px;
-  border: 2.5;
-  border-radius: 13px;
-  
+.button-div{
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-content: center;
 }
+
+.totalVotesList{
+  display: flex;
+  justify-content: center;
+  border-style: solid;
+  border-right: hidden;
+  border-left: hidden;
+  border-width: 3px;
+  border-color: darkgrey;
+  margin-bottom: 40px;
+}
+
+.messageCard{
+  margin-bottom: 10px;
+}
+
+.messageDiv{
+  justify-content: center;
+}
+
+.messageDivHeading{
+  display: flex;
+  justify-content: center;
+}
+
