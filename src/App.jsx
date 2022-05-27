@@ -3,6 +3,16 @@ import {ethers} from "ethers";
 import './App.css';
 import abi from "./utils/WavePortal.json";
 
+import Nav from "../NavBar";
+
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
+import Button from '@mui/material/Button';
+import { AppBar, Box, FormControl, InputLabel, NativeSelect, TextField, Toolbar, Typography } from "@mui/material";
+
 
 
 
@@ -175,71 +185,113 @@ const App = () => {
   
   
   return (
-    <div className="mainContainer">
+   
+ <div className="mainContainer">
+  
 
-      <div className="dataContainer">
-        <div className="header">
-        Decentralised Voting System 
-        </div>
 
-        <div className="bio">
-        Select your option:
-        </div>
+<div className="dataContainer">
+  <Nav />
+  
 
-        <div>
-        <form onSubmit={castVote}>
-          
-          <label>
-          Select your vote: 
-            <select onChange={e => setVote(e.target.value)}>
-             <option value="candidate1">Candidate 1</option>
-             <option value="candidate2">Candidate 2</option>
-             <option value="candidate3">Candidate 3</option>
-             <option defaultValue="noVote">Vote for None</option>
-            </select>
-          </label>
-          <br />
-          <label>
-            Enter your message:
-            <br />
-            <textarea onChange={e => setMessage(e.target.value)}></textarea>
-          </label>
-          <br />
-        <input type="submit" value="Submit"></input>
-        </form>
-        </div>
+  {/* <div>
+  <form onSubmit={castVote}>
+    
+    <label>
+    Select your vote: 
+      <select onChange={e => setVote(e.target.value)}>
+       <option value="candidate1">Candidate 1</option>
+       <option value="candidate2">Candidate 2</option>
+       <option value="candidate3">Candidate 3</option>
+       <option defaultValue="noVote">Vote for None</option>
+      </select>
+    </label>
+    <br />
+    <label>
+      Enter your message:
+      <br />
+      <textarea onChange={e => setMessage(e.target.value)}></textarea>
+    </label>
+    <br />
+  <input type="submit" value="Submit"></input>
+  </form>
+  </div> */}
 
-        <br />
+  {/* Material UI Form */}
+  <div>
+  <FormControl fullWidth>
+    <InputLabel variant="standard" htmlFor="uncontrolled-native">
+      Select Your Candidate
+    </InputLabel>
+    <NativeSelect inputProps={{
+      name: 'Candidate Name',
+      id: 'uncontrolled-native'
+    }}>
+      <option value={1}>Candidate 1</option>
+      <option value={2}>Candidate 2</option>
+      <option value={3}>Candidate 3</option>
+      <option value={0}>Vote for None</option>
+    </NativeSelect>
+  </FormControl>
 
-        <div>
-          <li>Total votes of Candidate 1 ==> {candidate1Total}</li>
-          <li>Total votes of Candidate 2 ==> {candidate2Total}</li>
-          <li>Total votes of Candidate 3 ==> {candidate3Total}</li>
-          <li>Total votes for no vote ==> {noVoteTotal}</li>
-         
-        </div>
+  <FormControl fullWidth>
 
-        
+  <TextField label="Your message here"
+  multiline
+  maxRows={5}
+  variant="filled"
+  onChange={null}
+  ></TextField>
+  
+  </FormControl>
+  <Button variant="contained" color="success">Submit</Button>
 
-        {!currentAccount && (
-          <button className="connectButton" onClick={connectWallet}>
-            Connect Wallet
-          </button>
-        )}
+  </div>
+ 
 
-        
+  <br />
 
-        {allVotes.map((vote,index) => {
-      return (
-        <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px"}}>
-          <div>Address: {vote.address}</div>
-          <div>Time: {vote.timestamp.toString()}</div>
-          <div>Message: {vote.message}</div>
-        </div>
-      )
-        })}
-      </div>
-    </div>
+  <div>
+    <li>Total votes of Candidate 1 ==> {candidate1Total}</li>
+    <li>Total votes of Candidate 2 ==> {candidate2Total}</li>
+    <li>Total votes of Candidate 3 ==> {candidate3Total}</li>
+    <li>Total votes for no vote ==> {noVoteTotal}</li>
+   
+  </div>
+
+  
+
+  {!currentAccount && (
+    <Button 
+    // className="connectButton" 
+    variant="contained"
+    color="success"
+    onClick={connectWallet}>
+      Connect Wallet
+    </Button>
+  )}
+  {currentAccount && (
+    <Button variant="contained" disabled>
+      Connect Wallet
+      </Button>
+  )}
+
+  
+
+  {allVotes.map((vote,index) => {
+return (
+  <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px"}}>
+    <div>Address: {vote.address}</div>
+    <div>Time: {vote.timestamp.toString()}</div>
+    <div>Message: {vote.message}</div>
+  </div>
+)
+  })}
+</div>
+</div>
+
+    
+    
   );
 }
 
