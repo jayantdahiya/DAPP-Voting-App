@@ -3,8 +3,9 @@ import {ethers} from "ethers";
 import './App.css';
 import abi from "./utils/WavePortal.json";
 
-import Nav from "../NavBar";
-import Msg from "./Messages";
+import Nav from "./NavBar";
+
+
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -12,7 +13,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import Button from '@mui/material/Button';
-import {  Avatar, Card, CardContent, Divider, FormControl, Grid, InputLabel, List, ListItem, ListItemAvatar, ListItemText, NativeSelect, Paper, TextField, Typography } from "@mui/material";
+import {  Alert, Avatar, Card, CardContent, Divider, FormControl, Grid, InputLabel, List, ListItem, ListItemAvatar, ListItemText, NativeSelect, Paper, TextField, Typography } from "@mui/material";
 
 
 
@@ -100,31 +101,10 @@ const App = () => {
     }
   }
 
-  /**
-  * connectWallet method 
-  */
-  const connectWallet = async () => {
-    try {
-      const { ethereum } = window;
-
-      if (ethereum) {
-        await window.ethereum.enable();
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-        let count = await wavePortalContract.getTotalVotes();
-        console.log("Retrieved total votes count...", count.toNumber());
-      } else {
-        console.log("Ethereum object doesn't exist!");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
   
   useEffect(() => {
     checkIfWalletIsConnected();
+    getAllVotes();
   }, [])
 
  
@@ -138,28 +118,28 @@ const App = () => {
         const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
 
         switch(selectedVote) {
-          case 'candidate1':
+          case '1':
             {
               const voteFor1 = await wavePortalContract.voteCandidate1(message);
               console.log("Mining...", voteFor1.hash);
               await voteFor1.wait();
               console.log("Mined -- ", voteFor1.hash);
             }
-          case 'candidate2':
+          case '2':
             {
               const voteFor2 = await wavePortalContract.voteCandidate2(message);
               console.log("Mining...", voteFor2.hash);
               await voteFor2.wait();
               console.log("Mined -- ", voteFor2.hash);
             }
-          case 'candidate3':
+          case '3':
             {
               const voteFor3 = await wavePortalContract.voteCandidate3(message);
               console.log("Mining...", voteFor3.hash);
               await voteFor3.wait();
               console.log("Mined -- ", voteFor3.hash);
             }
-          case 'noVote':
+          case '0':
             {
               const voteForNone = await wavePortalContract.voteNone(message);
               console.log("Mining...", voteForNone.hash);
@@ -226,14 +206,16 @@ const App = () => {
     <InputLabel variant="standard" htmlFor="uncontrolled-native">
       Select Your Candidate
     </InputLabel>
-    <NativeSelect inputProps={{
+    <NativeSelect 
+    onChange={e=>setVote(e.target.value)}
+    inputProps={{
       name: 'Candidate Name',
       id: 'uncontrolled-native'
     }}>
+      <option value={0}>Vote for None</option>
       <option value={1}>Candidate 1</option>
       <option value={2}>Candidate 2</option>
       <option value={3}>Candidate 3</option>
-      <option value={0}>Vote for None</option>
     </NativeSelect>
   </FormControl>
   </div>
@@ -246,14 +228,14 @@ const App = () => {
   multiline
   maxRows={5}
   variant="filled"
-  onChange={null}
+  onChange={e=>setMessage(e.target.value)}
   ></TextField>
   
   </FormControl>
   </div>
 
   <div className="button-div">
-  <Button variant="contained" color="success">Submit</Button>
+  <Button variant="contained" color="success" onClick={castVote}>Submit</Button>
   </div>
   </div>
 
