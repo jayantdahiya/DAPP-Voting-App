@@ -175,28 +175,6 @@ const App = () => {
   <Nav />
   
 
-  {/* <div>
-  <form onSubmit={castVote}>
-    
-    <label>
-    Select your vote: 
-      <select onChange={e => setVote(e.target.value)}>
-       <option value="candidate1">Candidate 1</option>
-       <option value="candidate2">Candidate 2</option>
-       <option value="candidate3">Candidate 3</option>
-       <option defaultValue="noVote">Vote for None</option>
-      </select>
-    </label>
-    <br />
-    <label>
-      Enter your message:
-      <br />
-      <textarea onChange={e => setMessage(e.target.value)}></textarea>
-    </label>
-    <br />
-  <input type="submit" value="Submit"></input>
-  </form>
-  </div> */}
 
   {/* Material UI */}
   <div className="firstDiv">
@@ -280,21 +258,6 @@ const App = () => {
    
   </div>
 
-  
-
-  {/* {!currentAccount && (
-    <Button 
-    variant="contained"
-    color="success"
-    onClick={connectWallet}>
-      Connect Wallet
-    </Button>
-  )}
-  {currentAccount && (
-    <Button variant="contained" disabled>
-      Connect Wallet
-      </Button>
-  )} */}
 
 
   <div className="messageDiv">
@@ -303,22 +266,6 @@ const App = () => {
     </div>
     {allVotes.map((vote,index) => {
       return (
-        // <Card 
-        // key={index}
-        // className="messageCard"
-        // >
-        //   <CardContent>
-        //     <Typography sx={{fontSize: 12}} gutterBottom>
-        //       Address: {vote.address}
-        //     </Typography>
-        //     <Typography variant="subtitle1" sx={{fontSize: 12}}>
-        //       Time: {vote.timestamp.toString()}
-        //     </Typography>
-        //     <Typography>
-        //       Message: {vote.message}
-        //     </Typography>
-        //   </CardContent>
-        // </Card>
         <Paper key={index} 
         sx={{
           p: 2,
